@@ -1,0 +1,9 @@
+{
+  "name": "example_table",
+  "records": [
+    {
+      "id": 2,
+      "data": "Second Record"
+    }
+  ]
+}
