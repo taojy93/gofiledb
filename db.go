@@ -71,7 +71,6 @@ func (db *DB) CreateTable(tableName string) error {
 	table := NewTable(tableName)
 	db.Tables[tableName] = table
 
-	// 如果不这么操作会导致 deadlock
 	db.Unlock() // Unlock DB before saving the table
 	err := db.SaveTable(tableName)
 	db.Lock() // Lock DB again after saving the table
@@ -110,7 +109,6 @@ func (db *DB) AddRecord(tableName string, record Record) error {
 
 	table.AddRecord(record)
 
-	// 如果不这么操作会导致 deadlock
 	db.Unlock() // Unlock DB before saving the table
 	err := db.SaveTable(tableName)
 	db.Lock() // Lock DB again after saving the table
@@ -134,7 +132,6 @@ func (db *DB) UpdateRecord(tableName string, id int, data interface{}) error {
 		return err
 	}
 
-	// 如果不这么操作会导致 deadlock
 	db.Unlock() // Unlock DB before saving the table
 	err := db.SaveTable(tableName)
 	db.Lock() // Lock DB again after saving the table
@@ -159,7 +156,6 @@ func (db *DB) DeleteRecord(tableName string, id int) error {
 		return err
 	}
 
-	// 如果不这么操作会导致 deadlock
 	db.Unlock() // Unlock DB before saving the table
 	err := db.SaveTable(tableName)
 	db.Lock() // Lock DB again after saving the table
