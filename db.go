@@ -177,3 +177,28 @@ func (db *DB) GetRecord(tableName string, id int) (*Record, error) {
 
 	return table.GetRecord(id)
 }
+
+func (db *DB) GetRecordList(tableName string, ids []int) ([]Record, error) {
+	db.Lock()
+	defer db.Unlock()
+
+	table, exists := db.Tables[tableName]
+	if !exists {
+		return nil, fmt.Errorf("table %s does not exist", tableName)
+	}
+
+	list := make([]Record, 0)
+	if len(ids) > 0 {
+		list = db.Tables[tableName].Records
+	} else {
+		for _, id := range ids {
+			record, err := table.GetRecord(id)
+			if err != nil {
+				return nil, err
+			}
+			list = append(list, *record)
+		}
+	}
+
+	return list, nil
+}
