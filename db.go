@@ -188,7 +188,7 @@ func (db *DB) GetRecordList(tableName string, ids []int) ([]Record, error) {
 	}
 
 	list := make([]Record, 0)
-	if len(ids) > 0 {
+	if len(ids) == 0 {
 		list = db.Tables[tableName].Records
 	} else {
 		for _, id := range ids {
